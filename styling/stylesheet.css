@@ -1,10 +1,16 @@
+body {
+    font-size: 12px;
+    padding: 1em;
+    background-color: #e8e9db
+}
+
 h1{
     text-align: center;
 }
 
 .map{
     /*border-style: groove;*/
-    height: 590px;
+    height: 490px;
     width: 65%;
     margin-left: 0;
     float: left;
@@ -12,33 +18,32 @@ h1{
 
 
 .videos{
-    /*border-style: groove;*/
-    height:270px;
-    width: 34%;
+
+    height:250px;
+    width: 400px;
     float: right;
-    margin-top: 60px;
+    margin-top: 10px;
+    white-space:normal;
 }
 #right{
-    visibility:hidden;
-}
-#filter{
-    height:260px;
+    margin-top: 40px;
     overflow:auto;
     white-space:nowrap;
+    display: none;
+    float: right;
+    width: 30%;
+    height: 490px;
+    margin-right: 1%;
 }
-#filter li{
-    /*border-style: groove;*/
-    display: inline-block;
-    vertical-align:top;
-    width:30%;
-    /*height: 200px;*/
-    background:gray;
+#info{
+    /*height:230px;*/
+    font-size: 20px;
+    font-family: sans-serif;
     white-space:normal;
 }
 
+
 img{
-    max-width: 100%;
-    max-height: 100%;
     object-fit: contain;
     cursor: pointer;
 }

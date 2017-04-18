@@ -3,91 +3,86 @@
 <meta charset="utf-8">
 <link rel= "stylesheet" type="text/css" href="styling/map.css">
     <link rel= "stylesheet" type="text/css" href="styling/stylesheet.css">
+    <link rel= "stylesheet" type="text/css" href="styling/filter.css">
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
 <h1>20 Mysterious Dance Styles</h1>
-<div class="map"></div>
-<div id = "right">
-    <div id = "filter">
+<div class="map">
+    <nav id="primary_nav_wrap">
         <ul>
-
-            <li>
-                <div class="inner">
-                    <img src="images/tapDance.jpg" href="#media-popup" data-media="//www.youtube.com/embed/LAU8eBek_NU" onclick="myFunction() "/>
-                    <p class = "danceType">Tap Dance</p>
-                </div>
+            <li class="current-menu-item"><a href="#">Home</a></li>
+            <li><a href="#">Menu 1</a>
+                <ul>
+                    <li><a href="#">Sub Menu 1</a></li>
+                    <li><a href="#">Sub Menu 2</a></li>
+                    <li><a href="#">Sub Menu 3</a></li>
+                    <li><a href="#">Sub Menu 4</a>
+                        <ul>
+                            <li><a href="#">Deep Menu 1</a>
+                                <ul>
+                                    <li><a href="#">Sub Deep 1</a></li>
+                                    <li><a href="#">Sub Deep 2</a></li>
+                                    <li><a href="#">Sub Deep 3</a></li>
+                                    <li><a href="#">Sub Deep 4</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Deep Menu 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Sub Menu 5</a></li>
+                </ul>
             </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg2.jpg" /></a>
-                    <br />
-                    Dance2
-                </div>
+            <li><a href="#">Menu 2</a>
+                <ul>
+                    <li><a href="#">Sub Menu 1</a></li>
+                    <li><a href="#">Sub Menu 2</a></li>
+                    <li><a href="#">Sub Menu 3</a></li>
+                </ul>
             </li>
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg1.jpg" /></a>
-                    <br />
-                    Dance3
-                </div>
+            <li><a href="#">Menu 3</a>
+                <ul>
+                    <li class="dir"><a href="#">Sub Menu 1</a></li>
+                    <li class="dir"><a href="#">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSEUE BUT MAYBE NOT?</a>
+                        <ul>
+                            <li><a href="#">Category 1</a></li>
+                            <li><a href="#">Category 2</a></li>
+                            <li><a href="#">Category 3</a></li>
+                            <li><a href="#">Category 4</a></li>
+                            <li><a href="#">Category 5</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Sub Menu 3</a></li>
+                    <li><a href="#">Sub Menu 4</a></li>
+                    <li><a href="#">Sub Menu 5</a></li>
+                </ul>
             </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg2.jpg" /></a>
-                    <br />
-                    Dance4
-                </div>
-            </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg1.jpg" /></a>
-                    <br />
-                    Dance5
-                </div>
-            </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg2.jpg" /></a>
-                    <br />
-                    Dance6
-                </div>
-            </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg1.jpg" /></a>
-                    <br />
-                    Dance7
-                </div>
-            </li>
-
-            <li>
-                <div class="inner">
-                    <a href="#"><img src="eg2.jpg" /></a>
-                    <br />
-                    Dance8
-                </div>
-            </li>
-
-
+            <li><a href="#">Menu 4</a></li>
+            <li><a href="#">Menu 5</a></li>
+            <li><a href="#">Menu 6</a></li>
+            <li><a href="#">Contact Us</a></li>
         </ul>
+    </nav>
+
+</div>
+
+<div id = "right">
+    <div id = "info">
+       <p id = "description"></p>
 
     </div>
 
     <div class = videos>
-        <!--<p><a href="#media-popup" data-media="//www.youtube.com/embed/uFO4Riu5DjU">click me</a></p>-->
 
         <div class="popup" id="media-popup">
-            <iframe width="470" height="270" src="" frameborder="0" allowfullscreen></iframe>
+            <iframe width="390" height="250" src="" frameborder="0" allowfullscreen id="videoTag"></iframe>
         </div>
     </div>
 </div>
-<script src="js/map.js"></script>
-<script src="js/layout.js"></script>
+<div id = "filter">
+
+</div>
+<script src="js/map.js?version=1"></script>
+<script src="js/videos.js?version=1"></script>

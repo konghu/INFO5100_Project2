@@ -76,38 +76,84 @@ d3.json("data/world-110m.json", function (error, world) {
 var translateLast = [0,0];
 var scaleLast     = null;
 
+var marks = []; //Longitude and latitude
+var danceInfo = [];
+
+var countryId = [];
+var danceDescription = [];
+
+var videoUrl = [];
+
+d3.json("data/danceform.json", function(error, d){
+
+    for(var i in d) {
+
+        var item = d[i];
+
+        marks.push({
+            "lat" : item.Latitude,
+            "long"  : item.Longitude
+        });
+
+        danceInfo.push({
+            "id": item.Country,
+            "description": item.Description
+        });
+        countryId.push(item.Country);
+        danceDescription.push(item.Description);
+        videoUrl.push(item.Video);
+    }
+
+    render();
+});
 
 function render() {
     map.selectAll('path')       // Redraw all map paths
         .attr('d', path);
 
-    var g = svg.append("g");
-    var marks = [{long: -75, lat: 43},{long: -78, lat: 41},{long: -70, lat: 53}];
-
-
-    d3.selectAll(".icons")
+    d3.selectAll("image")
         .remove();
 
-    g.selectAll("circle")
+
+    var circles = svg.append("g")
+        .attr("class", "group");
+
+
+    circles.selectAll("image")
         .data(marks)
         .enter()
-        // .append("a")
-        .append("circle")
+        .append("image")
+
+        .attr("xlink:href","images/icon.png ")
         .attr("class", "icons")
-        .attr("cx", function(d) {
-            return projection([d.long, d.lat])[0];
+        .attr("id", function (d, i) {
+            return danceInfo[i].id
         })
-        .attr("cy", function(d) {
-            return projection([d.long, d.lat])[1];
+        .attr("height", 25)
+        .attr("width", 25)
+        .attr("x", function(d) {
+            return projection([d.long, d.lat])[0] -15;
+        })
+        .attr("y", function(d) {
+            return projection([d.long, d.lat])[1] -15;
         })
         .attr("r", 5)
         .on('click', function(d){
-            console.log("sbsb");
-            document.getElementById("map").setAttribute("width", "900px")
-            document.getElementById("map").setAttribute("height", "400px")
-            document.getElementById("right").style.visibility = "visible";
+            document.getElementById("map").setAttribute("width", "900px");
+            document.getElementById("map").setAttribute("height", "400px");
+
+
+            var description = document.createTextNode(danceDescription[countryId.indexOf(this.id)]);
+            $("#description").html("");
+            $("#description").html(description);
+            updateVideo(this.id);
         })
-        .style("fill", "red");
+}
+
+function updateVideo(id) {
+    document.getElementById("right").style.display = "block";
+    document.getElementById("videoTag").src = videoUrl[countryId.indexOf(id)];
+
 }
 
 function handlePanZoom() {
