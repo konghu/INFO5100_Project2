@@ -1,0 +1,19 @@
+svg {
+    background-color: #454591;
+    border: 2px solid #888888;
+}
+
+path {
+    fill:   #e0f0d4;
+    stroke: #666;
+    stroke-width: .5px;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.map {
+    margin-top: 2em;
+}

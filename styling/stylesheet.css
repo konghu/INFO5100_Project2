@@ -1,0 +1,49 @@
+h1{
+    text-align: center;
+}
+
+.map{
+    /*border-style: groove;*/
+    height: 590px;
+    width: 65%;
+    margin-left: 0;
+    float: left;
+}
+
+
+.videos{
+    /*border-style: groove;*/
+    height:270px;
+    width: 34%;
+    float: right;
+    margin-top: 60px;
+}
+#right{
+    visibility:hidden;
+}
+#filter{
+    height:260px;
+    overflow:auto;
+    white-space:nowrap;
+}
+#filter li{
+    /*border-style: groove;*/
+    display: inline-block;
+    vertical-align:top;
+    width:30%;
+    /*height: 200px;*/
+    background:gray;
+    white-space:normal;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.danceType{
+    text-align: center;
+}
+
