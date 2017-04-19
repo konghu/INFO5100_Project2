@@ -81,7 +81,7 @@ var danceInfo = [];
 
 var countryId = [];
 var danceDescription = [];
-
+var danceName = [];
 var videoUrl = [];
 
 d3.json("data/danceform.json", function(error, d){
@@ -97,15 +97,21 @@ d3.json("data/danceform.json", function(error, d){
 
         danceInfo.push({
             "id": item.Country,
-            "description": item.Description
+            "description": item.Description,
         });
         countryId.push(item.Country);
+        danceName.push(item.Name);
         danceDescription.push(item.Description);
         videoUrl.push(item.Video);
     }
 
     render();
 });
+
+// Define the div for the tooltip
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 function render() {
     map.selectAll('path')       // Redraw all map paths
@@ -124,30 +130,43 @@ function render() {
         .enter()
         .append("image")
 
-        .attr("xlink:href","images/icon.png ")
+        .attr("xlink:href", "images/icon.png ")
         .attr("class", "icons")
         .attr("id", function (d, i) {
             return danceInfo[i].id
         })
         .attr("height", 25)
         .attr("width", 25)
-        .attr("x", function(d) {
-            return projection([d.long, d.lat])[0] -15;
+        .attr("x", function (d) {
+            return projection([d.long, d.lat])[0] - 15;
         })
-        .attr("y", function(d) {
-            return projection([d.long, d.lat])[1] -15;
+        .attr("y", function (d) {
+            return projection([d.long, d.lat])[1] - 15;
         })
         .attr("r", 5)
-        .on('click', function(d){
+        .on('click', function (d) {
             document.getElementById("map").setAttribute("width", "900px");
             document.getElementById("map").setAttribute("height", "400px");
 
-
             var description = document.createTextNode(danceDescription[countryId.indexOf(this.id)]);
-            $("#description").html("");
             $("#description").html(description);
             updateVideo(this.id);
         })
+
+        .on("mouseover", function (d) {
+            div.transition()
+                .duration(100)
+                .style("opacity", .9);
+            div.html(danceName[countryId.indexOf(this.id)])
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY -28) + "px");
+        })
+
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(100)
+                .style("opacity", 0);
+        });
 }
 
 function updateVideo(id) {
