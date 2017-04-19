@@ -524,6 +524,8 @@ function dstyle(flag)
 		temp_marks = wholemarks;
 		temp_danceInfo = wholedanceInfo;
 	}
+	marks = temp_marks;
+	danceInfo = temp_danceInfo;
 	circles.selectAll("text")
         .data(temp_marks)
         .enter()
@@ -536,7 +538,7 @@ function dstyle(flag)
 						return projection([d.long, d.lat])[1] -14.7;
 					})
 					.text(function(d,i) {
-							return danceInfo[i].name;
+							return temp_danceInfo[i].name;
 					});
 		
     circles.selectAll("image")
@@ -570,8 +572,7 @@ function dstyle(flag)
 						document.getElementById("videoTag").src = videoUrl[countryId.indexOf(this.id)];
 
 		});	
-		marks = temp_marks;
-		danceInfo = temp_danceInfo;
+		
 }
 function contact()
 {
