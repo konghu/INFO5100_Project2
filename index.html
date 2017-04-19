@@ -121,6 +121,9 @@ var medmarks = [];
 var meddanceInfo = [];
 var diffmarks = [];
 var diffdanceInfo = [];
+var wholemarks = [];
+var wholedanceInfo = [];
+
 function wholemap()
 {			
 
@@ -205,6 +208,16 @@ function wholemap()
 				for(var i in d) {
 
 					var item = d[i];
+					wholemarks.push({
+						"lat" : item.Latitude,
+						"long"  : item.Longitude
+					});
+
+					wholedanceInfo.push({
+						"id": item.Country,
+						"name" : item.Name,
+						"description": item.Description
+					});
 					if( (item.Participation=="Solo") || (item.Participation=="Solo,Group") )
 					{
 						solomarks.push({
@@ -241,7 +254,7 @@ function wholemap()
 							"description": item.Description
 						});						
 					}
-					if( (item.Category=="Ballroom") )
+					if( (item.Category=="Ballroom") || (item.Category=="Ballroom,Folk") )
 					{
 						ballmarks.push({
 							"lat" : item.Latitude,
@@ -253,7 +266,7 @@ function wholemap()
 							"description": item.Description
 						});						
 					}
-					if( (item.Category=="Folk") )
+					if( (item.Category=="Folk") || (item.Category=="Ballroom,Folk") || (item.Category=="Folk,Ceremonial") )
 					{
 						folkmarks.push({
 							"lat" : item.Latitude,
@@ -265,7 +278,7 @@ function wholemap()
 							"description": item.Description
 						});						
 					}
-					if( (item.Category=="Ceremonial") )
+					if( (item.Category=="Ceremonial") || (item.Category=="Folk,Ceremonial") )
 					{
 						ceremarks.push({
 							"lat" : item.Latitude,
@@ -508,8 +521,8 @@ function dstyle(flag)
 	}
 	if(flag=="20")
 	{
-		temp_marks = marks;
-		temp_danceInfo = danceInfo;
+		temp_marks = wholemarks;
+		temp_danceInfo = wholedanceInfo;
 	}
 	circles.selectAll("text")
         .data(temp_marks)
@@ -557,6 +570,8 @@ function dstyle(flag)
 						document.getElementById("videoTag").src = videoUrl[countryId.indexOf(this.id)];
 
 		});	
+		marks = temp_marks;
+		danceInfo = temp_danceInfo;
 }
 function contact()
 {
