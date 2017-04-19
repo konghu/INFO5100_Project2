@@ -1,7 +1,7 @@
 body {
     font-size: 12px;
-    padding: 1em;
-    background-color: #e8e9db
+    padding: 0.01em;
+    background-color: #00cc00;
 }
 
 h1{
@@ -26,7 +26,7 @@ h1{
     white-space:normal;
 }
 #right{
-    margin-top: 40px;
+    margin-top: 35px;
     overflow:auto;
     white-space:nowrap;
     display: none;
