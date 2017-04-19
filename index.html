@@ -9,13 +9,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
 </head>
-<body> <!--onload="wholemap()"-->
+<body onload="wholemap()">
 
 <h1><font face="Monotype Corsiva" size="11" color="#800000">20 Interesting Dance Styles</font></h1>
 <div class="map">
     <nav id="primary_nav_wrap">
         <ul>
-            <li class="current-menu-item"><a href="#">Home</a></li>
+            <li class="current-menu-item"><a href="#" onclick="wholemap()">Home</a></li>
             <li><a href="#">Dance Style</a>
                 <ul>
 					<li><a href="#" onclick="solo()">Solo</a></li>
@@ -102,8 +102,8 @@ var path,svg,map;
 
 var solomarks = [];
 var solodanceInfo = [];
-//function wholemap()
-//{
+function wholemap()
+{
 			function updateProjectionBounds () {
 				// Updates the view top left and bottom right with the current projection.
 				var yaw = projection.rotate()[0];
@@ -184,7 +184,7 @@ var solodanceInfo = [];
 				for(var i in d) {
 
 					var item = d[i];
-					if(item.Participation=="Solo")
+					if( (item.Participation=="Solo") || (item.Participation=="Solo,Group") )
 					{
 						solomarks.push({
 							"lat" : item.Latitude,
@@ -193,12 +193,9 @@ var solodanceInfo = [];
 						solodanceInfo.push({
 						"id": item.Country,
 						"description": item.Description
-						});
-						
+						});						
 					}
 				}
-
-				//render();
 			});
 			
 			function render() {
@@ -286,44 +283,17 @@ var solodanceInfo = [];
 
 				render();
 			}
-//}
+}
 function solo()
 {
-	d3.selectAll("image").remove();	
-	//alert("hello");
-	/*d3.json("data/danceform.json", function(error, d){
-	
-
-    for(var i in d) {
-
-        var item = d[i];
-		if(item.Participation=="Solo")
-		{
-			marks.push({
-				"lat" : item.Latitude,
-				"long"  : item.Longitude
-			});
-		
-
-			danceInfo.push({
-				"id": item.Country,
-				"description": item.Description
-			});
-			countryId.push(item.Country);
-			danceDescription.push(item.Description);
-			videoUrl.push(item.Video);
-		}
-    }*/
-
+	d3.selectAll("image").remove();		
     var circles = svg.append("g")
         .attr("class", "group");
-
 
     circles.selectAll("image")
         .data(solomarks)
         .enter()
         .append("image")
-
         .attr("xlink:href","images/icon.png ")
         .attr("class", "icons")
         .attr("id", function (d, i) {
@@ -348,8 +318,7 @@ function solo()
 
 		});
 	marks = solomarks;
-	danceInfo = solodanceInfo;
-	
+	danceInfo = solodanceInfo;	
 }
 </script>
 <script src="js/videos.js"></script>
