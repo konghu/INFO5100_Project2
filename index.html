@@ -11,11 +11,12 @@
 </head>
 <body onload="wholemap()">
 
-<h1><font face="Monotype Corsiva" size="11" color="#800000">20 Interesting Dance Styles</font></h1>
+<h1><font face="Monotype Corsiva" size="11" color="#800000">Interesting Dance Forms</font></h1>
 <div class="map">
     <nav id="primary_nav_wrap">
         <ul>
-            <li class="current-menu-item"><a href="#" onclick="wholemap()">Home</a></li>
+            <li class="current-menu-item"><a href="#" onclick="dstyle(20)">Home</a></li>
+			<li><a href="#" onclick="instruct()">Ways to Interact</a></li>
             <li><a href="#">Dance Style</a>
                 <ul>
 					<li><a href="#" onclick="dstyle(0)">Solo</a></li>
@@ -25,54 +26,51 @@
             </li>
             <li><a href="#">Dance Categories</a>
                 <ul>
-                    <li><a href="#">Ballroom</a></li>
-                    <li><a href="#">Folk</a></li>
-                    <li><a href="#">Ceremonial</a></li>
-					<li><a href="#">Street</a></li>
-					<li><a href="#">Concert</a></li>
+                    <li><a href="#" onclick="dstyle(3)">Ballroom</a></li>
+                    <li><a href="#" onclick="dstyle(4)">Folk</a></li>
+                    <li><a href="#" onclick="dstyle(5)">Ceremonial</a></li>
+					<li><a href="#" onclick="dstyle(6)">Street</a></li>
+					<li><a href="#" onclick="dstyle(7)">Concert</a></li>
                 </ul>
             </li>
-            <li><a href="#">Year of Origin</a>
-                <ul>
-                    <li class="dir"><a href="#">Sub Menu 1</a></li>
-                    <li class="dir"><a href="#">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSEUE BUT MAYBE NOT?</a>
-                        <ul>
-                            <li><a href="#">Category 1</a></li>
-                            <li><a href="#">Category 2</a></li>
-                            <li><a href="#">Category 3</a></li>
-                            <li><a href="#">Category 4</a></li>
-                            <li><a href="#">Category 5</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Sub Menu 3</a></li>
-                    <li><a href="#">Sub Menu 4</a></li>
-                    <li><a href="#">Sub Menu 5</a></li>
+            <li><a href="#">Difficulty</a>
+                <ul>                    
+                    <li><a href="#" onclick="dstyle(8)">Easy</a></li>
+                    <li><a href="#" onclick="dstyle(9)">Medium</a></li>
+					<li><a href="#" onclick="dstyle(10)">Difficult</a></li>                    
                 </ul>
             </li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="#" onclick="contact()">Contact Us</a></li>
         </ul>
     </nav>
 
 </div>
-
+<style>
+p.test {
+    width: 15em; 
+    word-wrap: break-word;
+	margin-top: 35px;
+    float: right;
+    margin-right : 2%;
+}
+</style>
+<p class="test" id="pop"></p>
 <div id = "right">
-    <div id = "info">
-       <p id = "description"></p>
-
-    </div>
-
+	
+	<div>
+	<p><font size="14"><b id = "name"></b></font></p>
+	</div>
     <div class = videos>
-
         <div class="popup" id="media-popup">
-            <iframe width="390" height="250" src="" frameborder="0" allowfullscreen id="videoTag"></iframe>
+            <iframe width="390" height="220" src="" frameborder="0" allowfullscreen id="videoTag"></iframe>
         </div>
     </div>
+	
+	<div id = "info"> 
+       <p id = "description"></p>
+    </div>
+  
 </div>
-<div id = "filter">
-
-</div>
-
-
 <script>
 var mapDiv = d3.select('.map');
 var width = 1380;
@@ -106,8 +104,26 @@ var couplemarks = [];
 var coupledanceInfo = [];
 var groupmarks = [];
 var groupdanceInfo = [];
+
+var ballmarks = [];
+var balldanceInfo = [];
+var folkmarks = [];
+var folkdanceInfo = [];
+var ceremarks = [];
+var ceredanceInfo = [];
+var stmarks = [];
+var stdanceInfo = [];
+var conctmarks = [];
+var conctdanceInfo = [];
+var easymarks = [];
+var easydanceInfo = [];
+var medmarks = [];
+var meddanceInfo = [];
+var diffmarks = [];
+var diffdanceInfo = [];
 function wholemap()
-{
+{			
+
 			function updateProjectionBounds () {
 				// Updates the view top left and bottom right with the current projection.
 				var yaw = projection.rotate()[0];
@@ -173,6 +189,7 @@ function wholemap()
 
 					danceInfo.push({
 						"id": item.Country,
+						"name" : item.Name,
 						"description": item.Description
 					});
 					countryId.push(item.Country);
@@ -196,6 +213,7 @@ function wholemap()
 						});
 						solodanceInfo.push({
 							"id": item.Country,
+							"name": item.Name,
 							"description": item.Description
 						});						
 					}
@@ -207,6 +225,7 @@ function wholemap()
 						});
 						coupledanceInfo.push({
 							"id": item.Country,
+							"name": item.Name,
 							"description": item.Description
 						});						
 					}
@@ -218,6 +237,103 @@ function wholemap()
 						});
 						groupdanceInfo.push({
 							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Category=="Ballroom") )
+					{
+						ballmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						balldanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Category=="Folk") )
+					{
+						folkmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						folkdanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Category=="Ceremonial") )
+					{
+						ceremarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						ceredanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Category=="Street") )
+					{
+						stmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						stdanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Category=="Concert") )
+					{
+						conctmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						conctdanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Difficulty=="Easy") )
+					{
+						easymarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						easydanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});						
+					}
+					if( (item.Difficulty=="Medium") )
+					{
+						medmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						meddanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
+							"description": item.Description
+						});							
+					}
+					if( (item.Difficulty=="Difficult") )
+					{
+						diffmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						diffdanceInfo.push({
+							"id": item.Country,
+							"name": item.Name,
 							"description": item.Description
 						});						
 					}
@@ -228,19 +344,33 @@ function wholemap()
 				map.selectAll('path')       // Redraw all map paths
 					.attr('d', path);
 
-				d3.selectAll("image")
-					.remove();
+				d3.selectAll("image").remove();					
+				d3.selectAll("text").remove();
 
 
 				var circles = svg.append("g")
 					.attr("class", "group");
+					
+				circles.selectAll("text")
+					.data(marks)
+					.enter()
+					.append("text")
+					.style("font-size", "9px")
+					.attr("x", function(d) {
+						return projection([d.long, d.lat])[0] -14.7;
+					})
+					.attr("y", function(d) {
+						return projection([d.long, d.lat])[1] -14.7;
+					})
+					.text(function(d,i) {
+							return danceInfo[i].name;
+					});
 
 
 				circles.selectAll("image")
 					.data(marks)
-					.enter()
-					.append("image")
-
+					.enter()					
+					.append("image")					
 					.attr("xlink:href","images/icon.png ")
 					.attr("class", "icons")
 					.attr("id", function (d, i) {
@@ -255,9 +385,11 @@ function wholemap()
 						return projection([d.long, d.lat])[1] -15;
 					})
 					.attr("r", 5)
-					.on('click', function(d){
+					.on('click', function(d,i){
 						document.getElementById("map").setAttribute("width", "900px");
-						document.getElementById("map").setAttribute("height", "400px");
+						document.getElementById("map").setAttribute("height", "500px");
+						document.getElementById("name").innerHTML = danceInfo[i].name;
+						document.getElementById("pop").innerHTML = "";
 
 
 						var description = document.createTextNode(danceDescription[countryId.indexOf(this.id)]);
@@ -268,6 +400,7 @@ function wholemap()
 			}
 
 			function updateVideo(id) {
+				
 				document.getElementById("right").style.display = "block";
 				document.getElementById("videoTag").src = videoUrl[countryId.indexOf(id)];
 
@@ -312,7 +445,9 @@ function wholemap()
 }
 function dstyle(flag)
 {
-	d3.selectAll("image").remove();		
+	document.getElementById("pop").style.display = "None";
+	d3.selectAll("image").remove();
+	d3.selectAll("text").remove();	
     var circles = svg.append("g")
         .attr("class", "group");
 	var temp_marks,temp_danceInfo;
@@ -331,6 +466,66 @@ function dstyle(flag)
 		temp_marks = groupmarks;
 		temp_danceInfo = groupdanceInfo;
 	}
+	if(flag=="3")
+	{
+		temp_marks = ballmarks;
+		temp_danceInfo = balldanceInfo;
+	}
+	if(flag=="4")
+	{
+		temp_marks = folkmarks;
+		temp_danceInfo = folkdanceInfo;
+	}
+	if(flag=="5")
+	{
+		temp_marks = groupmarks;
+		temp_danceInfo = groupdanceInfo;
+	}
+	if(flag=="6")
+	{
+		temp_marks = groupmarks;
+		temp_danceInfo = groupdanceInfo;
+	}
+	if(flag=="7")
+	{
+		temp_marks = groupmarks;
+		temp_danceInfo = groupdanceInfo;
+	}
+	if(flag=="8")
+	{
+		temp_marks = easymarks;
+		temp_danceInfo = easydanceInfo;
+	}
+	if(flag=="9")
+	{
+		temp_marks = medmarks;
+		temp_danceInfo = meddanceInfo;
+	}
+	if(flag=="10")
+	{
+		temp_marks = diffmarks;
+		temp_danceInfo = diffdanceInfo;
+	}
+	if(flag=="20")
+	{
+		temp_marks = marks;
+		temp_danceInfo = danceInfo;
+	}
+	circles.selectAll("text")
+        .data(temp_marks)
+        .enter()
+		.append("text")
+		.style("font-size", "9px")
+					.attr("x", function(d) {
+						return projection([d.long, d.lat])[0] -14.7;
+					})
+					.attr("y", function(d) {
+						return projection([d.long, d.lat])[1] -14.7;
+					})
+					.text(function(d,i) {
+							return danceInfo[i].name;
+					});
+		
     circles.selectAll("image")
         .data(temp_marks)
         .enter()
@@ -338,7 +533,7 @@ function dstyle(flag)
         .attr("xlink:href","images/icon.png ")
         .attr("class", "icons")
         .attr("id", function (d, i) {
-            return temp_danceInfo[i].id
+            return temp_danceInfo[i].id;
         })
         .attr("height", 25)
         .attr("width", 25)
@@ -349,17 +544,51 @@ function dstyle(flag)
             return projection([d.long, d.lat])[1] -15;
         })
         .attr("r", 5)
-        .on('click', function(d){
+        .on('click', function(d, i){
             document.getElementById("map").setAttribute("width", "900px");
-            document.getElementById("map").setAttribute("height", "400px");
+            document.getElementById("map").setAttribute("height", "500px");
+			document.getElementById("name").innerHTML = danceInfo[i].name;
+			document.getElementById("pop").innerHTML = "";
+			
 			var description = document.createTextNode(danceDescription[countryId.indexOf(this.id)]);
 						$("#description").html("");
 						$("#description").html(description);
-						updateVideo(this.id);
+						document.getElementById("right").style.display = "block";
+						document.getElementById("videoTag").src = videoUrl[countryId.indexOf(this.id)];
 
-		});
-	marks = temp_marks;
-	danceInfo = temp_danceInfo;	
+		});	
+}
+function contact()
+{
+		document.getElementById("right").style.display = "None";
+		document.getElementById("name").innerHTML = "";
+		document.getElementById("description").innerHTML= "";
+		document.getElementById("videoTag").src = "";
+		document.getElementById("pop").style.display = "block";		
+		document.getElementById("map").setAttribute("width", "900px");
+        document.getElementById("map").setAttribute("height", "500px");
+		document.getElementById("right").style.display = "block";
+		document.getElementById("pop").innerHTML = "Team Members : Anusha Chowdhury(ac2633), Yitong Gao(yg398), Kong Hu(zh299)";
+}
+function instruct()
+{
+		document.getElementById("right").style.display = "None";
+		document.getElementById("name").innerHTML = "";
+		document.getElementById("description").innerHTML = "";
+		document.getElementById("videoTag").src = "";
+		document.getElementById("pop").style.display = "block";		
+		document.getElementById("map").setAttribute("width", "900px");
+        document.getElementById("map").setAttribute("height", "500px");
+		document.getElementById("right").style.display = "block";
+		var str = "WELCOME to our world of 20 interesting dance forms. \
+		Instructions : To know more about each dance form, click on the icons one by one.\
+		To zoom into the map, double click at that spot. \
+		To travel through the map, just click and drag the mouse through the map.   \
+		To classify dance forms based on style, category or difficulty level, use the dropdown menus.\
+		To go back to the first map with all the dances, click Home.Thank You for visiting our dance world!!";
+		document.getElementById("pop").style.font = "italic bold 20px arial,serif";
+		document.getElementById("pop").innerHTML = str;
+		
 }
 </script>
 <script src="js/videos.js"></script>
