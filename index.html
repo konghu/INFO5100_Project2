@@ -18,9 +18,9 @@
             <li class="current-menu-item"><a href="#" onclick="wholemap()">Home</a></li>
             <li><a href="#">Dance Style</a>
                 <ul>
-					<li><a href="#" onclick="solo()">Solo</a></li>
-                    <li><a href="#">Couple</a></li>
-                    <li><a href="#">Group</a></li>                    
+					<li><a href="#" onclick="dstyle(0)">Solo</a></li>
+                    <li><a href="#" onclick="dstyle(1)">Couple</a></li>
+                    <li><a href="#" onclick="dstyle(2)">Group</a></li>                    
                 </ul>
             </li>
             <li><a href="#">Dance Categories</a>
@@ -32,7 +32,7 @@
 					<li><a href="#">Concert</a></li>
                 </ul>
             </li>
-            <li><a href="#">Menu 3</a>
+            <li><a href="#">Year of Origin</a>
                 <ul>
                     <li class="dir"><a href="#">Sub Menu 1</a></li>
                     <li class="dir"><a href="#">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSEUE BUT MAYBE NOT?</a>
@@ -102,6 +102,10 @@ var path,svg,map;
 
 var solomarks = [];
 var solodanceInfo = [];
+var couplemarks = [];
+var coupledanceInfo = [];
+var groupmarks = [];
+var groupdanceInfo = [];
 function wholemap()
 {
 			function updateProjectionBounds () {
@@ -191,8 +195,30 @@ function wholemap()
 							"long"  : item.Longitude
 						});
 						solodanceInfo.push({
-						"id": item.Country,
-						"description": item.Description
+							"id": item.Country,
+							"description": item.Description
+						});						
+					}
+					if( (item.Participation=="Partner") )
+					{
+						couplemarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						coupledanceInfo.push({
+							"id": item.Country,
+							"description": item.Description
+						});						
+					}
+					if( (item.Participation=="Group") || (item.Participation=="Solo,Group")  )
+					{
+						groupmarks.push({
+							"lat" : item.Latitude,
+							"long"  : item.Longitude
+						});
+						groupdanceInfo.push({
+							"id": item.Country,
+							"description": item.Description
 						});						
 					}
 				}
@@ -284,20 +310,35 @@ function wholemap()
 				render();
 			}
 }
-function solo()
+function dstyle(flag)
 {
 	d3.selectAll("image").remove();		
     var circles = svg.append("g")
         .attr("class", "group");
-
+	var temp_marks,temp_danceInfo;
+	if(flag=="0")
+	{
+		temp_marks = solomarks;
+		temp_danceInfo = solodanceInfo;
+	}
+	if(flag=="1")
+	{
+		temp_marks = couplemarks;
+		temp_danceInfo = coupledanceInfo;
+	}
+	if(flag=="2")
+	{
+		temp_marks = groupmarks;
+		temp_danceInfo = groupdanceInfo;
+	}
     circles.selectAll("image")
-        .data(solomarks)
+        .data(temp_marks)
         .enter()
         .append("image")
         .attr("xlink:href","images/icon.png ")
         .attr("class", "icons")
         .attr("id", function (d, i) {
-            return solodanceInfo[i].id
+            return temp_danceInfo[i].id
         })
         .attr("height", 25)
         .attr("width", 25)
@@ -317,8 +358,8 @@ function solo()
 						updateVideo(this.id);
 
 		});
-	marks = solomarks;
-	danceInfo = solodanceInfo;	
+	marks = temp_marks;
+	danceInfo = temp_danceInfo;	
 }
 </script>
 <script src="js/videos.js"></script>
