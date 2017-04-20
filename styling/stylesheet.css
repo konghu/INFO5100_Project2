@@ -6,10 +6,10 @@ body {
 
 h1{
     text-align: center;
+	font-weight: bold;
 }
 
-.map{
-    /*border-style: groove;*/
+.map{    
     height: 490px;
     width: 65%;
     margin-left: 0;
@@ -34,6 +34,21 @@ h1{
     width: 30%;
     height: 490px;
     margin-right: 1%;
+}
+#legend{
+	float: left;
+	font-size: 11px;
+	margin-left: 1px;
+}
+#legend1{
+	float: left;
+	font-size: 9px;
+	margin-left: 1px;	
+}
+#legend2{
+	float: left;
+	font-size: 9px;
+	margin-left: 1px;	
 }
 #info{
     /*height:230px;*/
