@@ -6,83 +6,63 @@
     <link rel= "stylesheet" type="text/css" href="styling/filter.css">
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
 </head>
-<body>
-<h1>20 Mysterious Dance Styles</h1>
+<body onload="wholemap()">
+
+<h1>Interesting Dance Forms</h1>
 <div class="map">
     <nav id="primary_nav_wrap">
         <ul>
-            <li class="current-menu-item"><a href="#">Home</a></li>
-            <li><a href="#">Menu 1</a>
+            <li class="current-menu-item"><a href="#" onclick="dstyle(20)"><b>Home</b></a></li>
+			<li><a href="#" onclick="instruct()"><b>About</b></a></li>
+            <li><a href="#"><b>Dance Style</b></a>
                 <ul>
-                    <li><a href="#">Sub Menu 1</a></li>
-                    <li><a href="#">Sub Menu 2</a></li>
-                    <li><a href="#">Sub Menu 3</a></li>
-                    <li><a href="#">Sub Menu 4</a>
-                        <ul>
-                            <li><a href="#">Deep Menu 1</a>
-                                <ul>
-                                    <li><a href="#">Sub Deep 1</a></li>
-                                    <li><a href="#">Sub Deep 2</a></li>
-                                    <li><a href="#">Sub Deep 3</a></li>
-                                    <li><a href="#">Sub Deep 4</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Deep Menu 2</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Sub Menu 5</a></li>
+					<li><a href="#" onclick="dstyle(0)">Solo</a></li>
+                    <li><a href="#" onclick="dstyle(1)">Couple</a></li>
+                    <li><a href="#" onclick="dstyle(2)">Group</a></li>
                 </ul>
             </li>
-            <li><a href="#">Menu 2</a>
+            <li><a href="#"><b>Dance Categories</b></a>
                 <ul>
-                    <li><a href="#">Sub Menu 1</a></li>
-                    <li><a href="#">Sub Menu 2</a></li>
-                    <li><a href="#">Sub Menu 3</a></li>
+                    <li><a href="#" onclick="dstyle(3)">Ballroom</a></li>
+                    <li><a href="#" onclick="dstyle(4)">Folk</a></li>
+                    <li><a href="#" onclick="dstyle(5)">Ceremonial</a></li>
+					<li><a href="#" onclick="dstyle(6)">Street</a></li>
+					<li><a href="#" onclick="dstyle(7)">Concert</a></li>
                 </ul>
             </li>
-            <li><a href="#">Menu 3</a>
+            <li><a href="#"><b>Difficulty</b></a>
                 <ul>
-                    <li class="dir"><a href="#">Sub Menu 1</a></li>
-                    <li class="dir"><a href="#">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSEUE BUT MAYBE NOT?</a>
-                        <ul>
-                            <li><a href="#">Category 1</a></li>
-                            <li><a href="#">Category 2</a></li>
-                            <li><a href="#">Category 3</a></li>
-                            <li><a href="#">Category 4</a></li>
-                            <li><a href="#">Category 5</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Sub Menu 3</a></li>
-                    <li><a href="#">Sub Menu 4</a></li>
-                    <li><a href="#">Sub Menu 5</a></li>
+                    <li><a href="#" onclick="dstyle(8)">Easy</a></li>
+                    <li><a href="#" onclick="dstyle(9)">Medium</a></li>
+					<li><a href="#" onclick="dstyle(10)">Difficult</a></li>
                 </ul>
             </li>
-            <li><a href="#">Menu 4</a></li>
-            <li><a href="#">Menu 5</a></li>
-            <li><a href="#">Menu 6</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="#" onclick="contact()"><b>Contact Us</b></a></li>
         </ul>
     </nav>
-
 </div>
+<div class="legend" id="legend">Year of Origin : </div>
+<div class="legend1" id="legend1"> BC</div>
+<div class="legend2" id="legend2"> AD</div>
 
+<p class="test" id="pop"></p>
 <div id = "right">
-    <div id = "info">
-       <p id = "description"></p>
-
-    </div>
-
+	<div>
+	<p><font size="14"><b id = "name"></b></font></p>
+	</div>
     <div class = videos>
-
         <div class="popup" id="media-popup">
-            <iframe width="390" height="250" src="" frameborder="0" allowfullscreen id="videoTag"></iframe>
+            <iframe width="390" height="220" src="" frameborder="0" allowfullscreen id="videoTag"></iframe>
         </div>
     </div>
-</div>
-<div id = "filter">
+
+	<div id = "info">
+       <p id = "description"></p>
+    </div>
 
 </div>
-<script src="js/map.js?version=1"></script>
-<script src="js/videos.js?version=1"></script>
+<script src="js/map.js"></script>
+<script src="js/videos.js"></script>
