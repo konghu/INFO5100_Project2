@@ -11,20 +11,20 @@
 </head>
 <body onload="wholemap()">
 
-<h1><font face="Monotype Corsiva" size="11" color="#800000">Interesting Dance Forms</font></h1>
+<h1><font face="Monotype Corsiva" size="12" color="#800000"><b>Interesting Dance Forms</b></font></h1>
 <div class="map">
     <nav id="primary_nav_wrap">
         <ul>
-            <li class="current-menu-item"><a href="#" onclick="dstyle(20)">Home</a></li>
-			<li><a href="#" onclick="instruct()">Ways to Interact</a></li>
-            <li><a href="#">Dance Style</a>
+            <li class="current-menu-item"><a href="#" onclick="dstyle(20)"><b>Home</b></a></li>
+			<li><a href="#" onclick="instruct()"><b>About</b></a></li>
+            <li><a href="#"><b>Dance Style</b></a>
                 <ul>
 					<li><a href="#" onclick="dstyle(0)">Solo</a></li>
                     <li><a href="#" onclick="dstyle(1)">Couple</a></li>
                     <li><a href="#" onclick="dstyle(2)">Group</a></li>                    
                 </ul>
             </li>
-            <li><a href="#">Dance Categories</a>
+            <li><a href="#"><b>Dance Categories</b></a>
                 <ul>
                     <li><a href="#" onclick="dstyle(3)">Ballroom</a></li>
                     <li><a href="#" onclick="dstyle(4)">Folk</a></li>
@@ -33,18 +33,20 @@
 					<li><a href="#" onclick="dstyle(7)">Concert</a></li>
                 </ul>
             </li>
-            <li><a href="#">Difficulty</a>
+            <li><a href="#"><b>Difficulty</b></a>
                 <ul>                    
                     <li><a href="#" onclick="dstyle(8)">Easy</a></li>
                     <li><a href="#" onclick="dstyle(9)">Medium</a></li>
 					<li><a href="#" onclick="dstyle(10)">Difficult</a></li>                    
                 </ul>
             </li>
-            <li><a href="#" onclick="contact()">Contact Us</a></li>
+            <li><a href="#" onclick="contact()"><b>Contact Us</b></a></li>
         </ul>
     </nav>
-
 </div>
+<div class="legend" id="legend">Year of Origin : </div>
+<div class="legend1" id="legend1"> BC</div>
+<div class="legend2" id="legend2"> AD</div>
 <style>
 p.test {
     width: 15em; 
@@ -123,6 +125,7 @@ var diffmarks = [];
 var diffdanceInfo = [];
 var wholemarks = [];
 var wholedanceInfo = [];
+var yrs = [];
 
 function wholemap()
 {			
@@ -165,6 +168,13 @@ function wholemap()
 				.on("zoom", handlePanZoom);
 
 			svg.call(zoom);                     // Attach zoom event
+			
+			var legendDiv1 = d3.select('.legend1');
+			var legendDiv2 = d3.select('.legend2');
+			var legendsvg1 = legendDiv1.append('svg').attr('height',10).attr('width',10).style("opacity",0.95).style("fill","green").style("border","0px");
+			var legendsvg2 = legendDiv2.append('svg').attr('height',10).attr('width',10).style("opacity",0.95).style("fill","green").style("border","0px");
+			legendsvg1.append("rect").attr("class","overlay").attr("x",0).attr("y",0).attr("height",10).attr("width",10).style("fill","#ff9900").style("opacity",0.95);
+			legendsvg2.append("rect").attr("class","overlay").attr("x",0).attr("y",0).attr("height",10).attr("width",10).style("fill","#ff3399").style("opacity",0.95);
 
 			// Load map data
 			d3.json("data/world-110m.json", function (error, world) {
@@ -180,10 +190,16 @@ function wholemap()
 			
 
 			d3.json("data/danceform.json", function(error, d){
-
+				var index = 0;
 				for(var i in d) {
 
 					var item = d[i];
+					var y = String(item.Year);
+					
+					if(y.includes("BC"))
+						{	yrs.push(Number(0));	}
+					else
+						{	yrs.push(Number(item.Year));	}
 
 					marks.push({
 						"lat" : item.Latitude,
@@ -193,8 +209,10 @@ function wholemap()
 					danceInfo.push({
 						"id": item.Country,
 						"name" : item.Name,
+						"year" : yrs[index],
 						"description": item.Description
 					});
+					index = index + 1;
 					countryId.push(item.Country);
 					danceDescription.push(item.Description);
 					videoUrl.push(item.Video);
@@ -204,10 +222,14 @@ function wholemap()
 			});
 			
 			d3.json("data/danceform.json", function(error, d){
-
+				var yr = 0;
 				for(var i in d) {
 
 					var item = d[i];
+					if(String(item.Year).includes("BC"))
+						{	yr = 0;	}
+						else
+						{	yr = Number(item.Year);	}
 					wholemarks.push({
 						"lat" : item.Latitude,
 						"long"  : item.Longitude
@@ -216,17 +238,20 @@ function wholemap()
 					wholedanceInfo.push({
 						"id": item.Country,
 						"name" : item.Name,
+						"year": yr,
 						"description": item.Description
 					});
+					
 					if( (item.Participation=="Solo") || (item.Participation=="Solo,Group") )
 					{
 						solomarks.push({
 							"lat" : item.Latitude,
 							"long"  : item.Longitude
-						});
+						});						
 						solodanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -251,6 +276,7 @@ function wholemap()
 						groupdanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -263,6 +289,7 @@ function wholemap()
 						balldanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -275,6 +302,7 @@ function wholemap()
 						folkdanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -287,6 +315,7 @@ function wholemap()
 						ceredanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -299,6 +328,7 @@ function wholemap()
 						stdanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -311,6 +341,7 @@ function wholemap()
 						conctdanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -323,6 +354,7 @@ function wholemap()
 						easydanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -335,6 +367,7 @@ function wholemap()
 						meddanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});							
 					}
@@ -347,6 +380,7 @@ function wholemap()
 						diffdanceInfo.push({
 							"id": item.Country,
 							"name": item.Name,
+							"year": yr,
 							"description": item.Description
 						});						
 					}
@@ -368,7 +402,9 @@ function wholemap()
 					.data(marks)
 					.enter()
 					.append("text")
-					.style("font-size", "9px")
+					.style("font-size", "10px")
+					.style("font-weight", "bold")
+					.style("fill", function(d,i) { return coloryears(danceInfo[i].year);})
 					.attr("x", function(d) {
 						return projection([d.long, d.lat])[0] -14.7;
 					})
@@ -416,7 +452,9 @@ function wholemap()
 				
 				document.getElementById("right").style.display = "block";
 				document.getElementById("videoTag").src = videoUrl[countryId.indexOf(id)];
-
+				d3.select(".legend").style("opacity",0);
+				d3.select(".legend1").style("opacity",0);
+				d3.select(".legend2").style("opacity",0);
 			}
 
 			function handlePanZoom() {
@@ -523,6 +561,9 @@ function dstyle(flag)
 	{
 		temp_marks = wholemarks;
 		temp_danceInfo = wholedanceInfo;
+		d3.select(".legend").style("opacity",1);
+		d3.select(".legend1").style("opacity",1);
+		d3.select(".legend2").style("opacity",1);
 	}
 	marks = temp_marks;
 	danceInfo = temp_danceInfo;
@@ -530,14 +571,16 @@ function dstyle(flag)
         .data(temp_marks)
         .enter()
 		.append("text")
-		.style("font-size", "9px")
-					.attr("x", function(d) {
+		.style("font-size", "10px")
+		.style("font-weight", "bold")
+		.style("fill", function(d,i) { return coloryears(temp_danceInfo[i].year);})
+		.attr("x", function(d) {
 						return projection([d.long, d.lat])[0] -14.7;
 					})
-					.attr("y", function(d) {
+		.attr("y", function(d) {
 						return projection([d.long, d.lat])[1] -14.7;
 					})
-					.text(function(d,i) {
+		.text(function(d,i) {
 							return temp_danceInfo[i].name;
 					});
 		
@@ -564,6 +607,9 @@ function dstyle(flag)
             document.getElementById("map").setAttribute("height", "500px");
 			document.getElementById("name").innerHTML = danceInfo[i].name;
 			document.getElementById("pop").innerHTML = "";
+			d3.select(".legend").style("opacity",0);
+			d3.select(".legend1").style("opacity",0);
+			d3.select(".legend2").style("opacity",0);
 			
 			var description = document.createTextNode(danceDescription[countryId.indexOf(this.id)]);
 						$("#description").html("");
@@ -597,14 +643,22 @@ function instruct()
         document.getElementById("map").setAttribute("height", "500px");
 		document.getElementById("right").style.display = "block";
 		var str = "WELCOME to our world of 20 interesting dance forms. \
-		Instructions : To know more about each dance form, click on the icons one by one.\
+		Instructions to interact : To know more about each dance form, click on the icons one by one.\
 		To zoom into the map, double click at that spot. \
 		To travel through the map, just click and drag the mouse through the map.   \
 		To classify dance forms based on style, category or difficulty level, use the dropdown menus.\
-		To go back to the first map with all the dances, click Home.Thank You for visiting our dance world!!";
+		To go back to the first map with all the dances, click Home. Year of Origin is shown with binary colors. THANK YOU for visiting our dance world!!";
 		document.getElementById("pop").style.font = "italic bold 20px arial,serif";
 		document.getElementById("pop").innerHTML = str;
 		
+}
+function coloryears(x)
+{
+	
+	var myData = yrs.sort();	
+	var sc = d3.scale.quantize().domain(myData).range(["#ff9900", "#ff3399"]);
+	
+	return sc(x);
 }
 </script>
 <script src="js/videos.js"></script>
